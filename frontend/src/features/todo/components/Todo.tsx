@@ -1,4 +1,4 @@
-import { Component, createSignal, For, Match, Switch } from "solid-js";
+import {Component, createSignal, For, Match, Show, Switch} from "solid-js";
 import { createTodo, deleteTodo, getTodos, updateTodo } from "../api";
 
 const Todo: Component = () => {
@@ -64,20 +64,22 @@ const Todo: Component = () => {
             </Switch>
           </tbody>
         </table>
-        <div class="form-control p-4">
-          <div class="input-group">
-            <input
-              type="text"
-              placeholder="Add todo"
-              class="input input-bordered input-primary"
-              value={newTodo()}
-              onInput={e => setNewTodo(e.currentTarget.value)}
-            />
-            <button class="btn btn-primary" onClick={() => onAdd()}>
-              Add
-            </button>
+        <Show when={readTodos.isSuccess} keyed>
+          <div class="form-control p-4">
+            <div class="input-group">
+              <input
+                  type="text"
+                  placeholder="Add todo"
+                  class="input input-bordered input-primary"
+                  value={newTodo()}
+                  onInput={e => setNewTodo(e.currentTarget.value)}
+              />
+              <button class="btn btn-primary" onClick={() => onAdd()}>
+                Add
+              </button>
+            </div>
           </div>
-        </div>
+        </Show>
       </div>
     </>
   );
