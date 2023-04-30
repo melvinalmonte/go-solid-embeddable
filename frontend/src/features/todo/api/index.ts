@@ -6,13 +6,15 @@ import {
 } from "@tanstack/solid-query";
 import { queryClient } from "../../../utils";
 import { Todo } from "./types";
-const URL: string = "/api/";
 
+const apiUrl = (path: string) => `${import.meta.env.VITE_API_URL || ""}/api${path}`;
 export const getTodos = (): CreateQueryResult<Todo[], Error> => {
   return createQuery({
     queryKey: () => ["todos"],
     queryFn: async () => {
-      const response = await fetch(URL + "todos", { method: "GET" });
+      const URL = apiUrl("/todos");
+
+      const response = await fetch(URL, { method: "GET" });
       if (!response.ok) {
         throw new Error("Could not fetch todos");
       }
@@ -25,7 +27,8 @@ export const deleteTodo = (): CreateMutationResult<Todo, Error, Todo> => {
   return createMutation({
     mutationKey: ["deleteTodo"],
     mutationFn: async (todo: Todo) => {
-      const response = await fetch(URL + "todos?id=" + todo.id, {
+      const URL = apiUrl(`/todos?id=${todo.id}`);
+      const response = await fetch(URL, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -47,8 +50,8 @@ export const updateTodo = (): CreateMutationResult<Todo, Error, Todo> => {
   return createMutation({
     mutationKey: ["updateTodo"],
     mutationFn: async (todo: Todo) => {
-      console.log("TODO: ", todo);
-      const response = await fetch(URL + "todos?id=" + todo.id, {
+      const URL = apiUrl(`/todos?id=${todo.id}`);
+      const response = await fetch(URL, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +73,9 @@ export const createTodo = (): CreateMutationResult<string, Error, string> => {
   return createMutation({
     mutationKey: ["createTodo"],
     mutationFn: async (todo: string) => {
-      const response = await fetch(URL + "todos", {
+      const URL = apiUrl("/todos");
+
+      const response = await fetch(URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

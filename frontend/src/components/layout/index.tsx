@@ -8,7 +8,7 @@ const Layout: ParentComponent = props => {
   return (
     <>
       <Navbar />
-      <div>{props.children}</div>
+      <div class="container mx-auto">{props.children}</div>
     </>
   );
 };

@@ -1,16 +1,16 @@
-import { Component } from "solid-js";
+import { Component, Show } from "solid-js";
+import { A, useLocation } from "@solidjs/router";
 
 const Navbar: Component = () => {
+  const location = useLocation();
+
+  const isActive = (path: string) => location.pathname === path;
   return (
-    <nav class="p-3 border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-      <div class="container flex flex-wrap items-center justify-between mx-auto">
-        <a href="#" class="flex items-center">
-          <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-            Another To-Do
-          </span>
-        </a>
+    <div class="navbar bg-primary text-primary-content">
+      <div class="container mx-auto">
+        <a class=" normal-case text-xl">Another TODO App</a>
       </div>
-    </nav>
+    </div>
   );
 };
 
